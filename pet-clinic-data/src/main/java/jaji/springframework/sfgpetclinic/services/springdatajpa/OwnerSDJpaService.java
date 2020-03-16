@@ -5,6 +5,7 @@ import jaji.springframework.sfgpetclinic.repositories.OwnerRepository;
 import jaji.springframework.sfgpetclinic.repositories.PetRepository;
 import jaji.springframework.sfgpetclinic.repositories.PetTypeRepository;
 import jaji.springframework.sfgpetclinic.services.OwnerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 /**
  * @author Jakub Jílek on 03.03.2020
  */
+@Slf4j
 @Service
 @Profile("springdatajpa")
 public class OwnerSDJpaService implements OwnerService {
