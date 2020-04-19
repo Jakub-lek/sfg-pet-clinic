@@ -1,10 +1,7 @@
 package jaji.springframework.sfgpetclinic.bootstrap;
 
 import jaji.springframework.sfgpetclinic.model.*;
-import jaji.springframework.sfgpetclinic.services.OwnerService;
-import jaji.springframework.sfgpetclinic.services.PetTypeService;
-import jaji.springframework.sfgpetclinic.services.SpecialtyService;
-import jaji.springframework.sfgpetclinic.services.VetService;
+import jaji.springframework.sfgpetclinic.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +14,14 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialtyService specialtyService;
+    private final VisitService visitService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService, VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialtyService = specialtyService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -77,14 +76,21 @@ public class DataLoader implements CommandLineRunner {
         owner2.setAddress("123 Brickerel");
         owner2.setCity("Miami");
         owner2.setTelephone("123123123");
-        ownerService.save(owner2);
 
         Pet fionaPet = new Pet();
         fionaPet.setPetType(savedCatPetType);
         fionaPet.setOwner(owner2);
         fionaPet.setBirthDate(LocalDate.now());
         fionaPet.setName("Just cat");
-        owner1.getPets().add(fionaPet);
+        owner2.getPets().add(fionaPet);
+        ownerService.save(owner2);
+
+        Visit catVisit = new Visit();
+        catVisit.setPet(fionaPet);
+        catVisit.setDate(LocalDate.now());
+        catVisit.setDescription("Sneezy Kityy");
+
+        visitService.save(catVisit);
 
         System.out.println("Loaded Owners...");
 
